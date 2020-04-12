@@ -1,11 +1,24 @@
 import React, {useEffect, useState} from "react";
-
+import api  from "./services/api";
 import "./styles.css";
 
 function App() {
   const[repositories,setRepository]=useState([]);
+
+  useEffect(()=>{
+    const getRepository = async ()=>{
+        const {data} = await api.get('repositories');
+        setRepository(data);
+    }
+    getRepository();
+  },[])
+
   async function handleAddRepository() {
-    // TODO
+    const response = await api.post('repositories',{
+        url: "https://github.com/josepholiveira",
+        title: "Desafio ReactJS",
+        techs: ["React", "Node.js"],
+    })
   }
 
   async function handleRemoveRepository(id) {
